@@ -31,10 +31,10 @@ contract BinnaDevToken is ERC20, Ownable {
      */
     function mint(uint amount) payable public {
         uint _requiredAmount = amount * tokenPrice;
-        require(msg.value >= _requiredAmount, "You do not have sufficient balance");
+        require(msg.value >= _requiredAmount,"Ether sent is incorrect");
 
         uint amountWithDecimals = _requiredAmount * 10**18;
-        require(totalSupply() + amountWithDecimals < maxTotalSupply, "Exceeded Total Supply");
+        require(totalSupply() + amountWithDecimals < maxTotalSupply, "Exceeds the max total supply available.");
 
         // call the internal function from Openzeppelin's ERC20 contract
         _mint(msg.sender, amountWithDecimals);
@@ -51,7 +51,7 @@ contract BinnaDevToken is ERC20, Ownable {
         address sender = msg.sender;
         uint256 balance = BinnaDevsNFT.balanceOf(sender);
         uint256 amount;
-        require(balance > 0, "You are not a NFT holder");
+        require(balance > 0, "You do not own any Binna Dev NFT's");
         
         for(uint i; i < balance; i++){
             uint tokenId = BinnaDevsNFT.tokenOfOwnerByIndex(sender, i);
@@ -61,7 +61,7 @@ contract BinnaDevToken is ERC20, Ownable {
             }
         }
 
-        require(amount > 0, "You have minited all your token");
+        require(amount > 0, "You have already claimed all the tokens");
         _mint(sender, amount * tokensPerNFT);
     }
 
@@ -72,11 +72,11 @@ contract BinnaDevToken is ERC20, Ownable {
         */
     function withdraw() public {
         uint amount = address(this).balance;
-        require(amount > 0, "Nothing to withdraw");
+        require(amount > 0, "Nothing to withdraw; contract balance empty");
 
         address _owner = owner();
         (bool sent, ) = _owner.call{value: amount}("");
-        require(sent, "sent failed");
+        require(sent, "Failed to send Ether");
     }
 
     // Function to receive Ether. msg.data must be empty
