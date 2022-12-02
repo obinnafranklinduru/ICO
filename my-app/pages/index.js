@@ -22,7 +22,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   // walletConnected keeps track of whether the user's wallet is connected or not
   const [walletConnected, setWalletConnected] = useState(false);
-  // tokensMinted is the total number of tokens that have been minted till now out of 10000(max total supply)
+  // tokensMinted is the total number of tokens that have been minted 
+  // till now out of 10000(max total supply)
   const [tokensMinted, setTokensMinted] = useState(zero);
   // balanceOfBinnaDevTokens keeps track of number of Binna Dev tokens owned by an address
   const [balanceOfBinnaDevTokens, setBalanceOfBinnaDevTokens] = useState(zero);
@@ -51,13 +52,17 @@ export default function Home() {
   }, [walletConnected])
 
    /**
-   * Returns a Provider or Signer object representing the Ethereum RPC with or without the
-   * signing capabilities of metamask attached
+   * Returns a Provider or Signer object representing the Ethereum RPC with 
+   * or without the signing capabilities of metamask attached
    *
-   * A `Provider` is needed to interact with the blockchain - reading transactions, reading balances, reading state, etc.
+   * A `Provider` is needed to interact with the blockchain - 
+   * reading transactions, reading balances, reading state, etc.
    *
-   * A `Signer` is a special type of Provider used in case a `write` transaction needs to be made to the blockchain, which involves the connected account
-   * needing to make a digital signature to authorize the transaction being sent. Metamask exposes a Signer API to allow your website to
+   * A `Signer` is a special type of Provider used in case a `write` transaction 
+   * needs to be made to the blockchain, which involves the connected account
+   * needing to make a digital signature to authorize the transaction being sent.
+   *  
+   * Metamask exposes a Signer API to allow your website to
    * request signatures from the user using Signer functions.
    *
    * @param {*} needSigner - True if you need the signer, default false otherwise
