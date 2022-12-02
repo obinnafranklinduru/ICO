@@ -30,7 +30,7 @@ export default function Home() {
   const [tokenAmount, setTokenAmount] = useState(zero);
   // tokensToBeClaimed keeps track of the number of tokens that can be claimed
   // based on the Binna Dev NFT's held by the user for which they havent claimed the tokens
-  const [tokensToBeClaimed, setTokenToBeClaimed] = useState(zero);
+  const [tokensToBeClaimed, setTokensToBeClaimed] = useState(zero);
   // isOwner gets the owner of the contract through the signed address
   const [isOwner, setIsOwner] = useState(false);
   // Create a reference to the Web3 Modal which persists as long as the page is open
@@ -186,21 +186,21 @@ export default function Home() {
       const balance = await nftContract.balanceOf(address);
       
       if (balance === zero) {
-        setTokenToBeClaimed(zero);
+        setTokensToBeClaimed(zero);
       } else {
-        let amount = 0;
-        for (let i = 0; i < balance; i++){
+        var amount = 0;
+        for (var i = 0; i < balance; i++){
           const tokenId = await nftContract.tokenOfOwnerByIndex(address, i);
           const claimed = await tokenContract.tokenIdsClaimed(tokenId);
           if (!claimed) {
             amount++;
           }
         }
-        setTokenToBeClaimed(BigNumber.from(amount));
+      setTokensToBeClaimed(BigNumber.from(amount));
       }
     } catch (error) {
       console.error(error);
-      setTokenToBeClaimed(zero);
+      setTokensToBeClaimed(zero);
     }
   }
 
@@ -224,6 +224,7 @@ export default function Home() {
       await getTokensToBeClaimed();
     } catch (error) {
       console.error(error);
+      window.alert("You have already claimed all the tokens");
     }
   }
 

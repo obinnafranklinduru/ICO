@@ -583,7 +583,7 @@ export const NFT_CONTRACT_ABI = [
     }
   ]
 
-export const TOKEN_CONTRACT_ADDRESS = "0xdF7275cd8BFE19ad2276347dc271DF145479cdC2";
+export const TOKEN_CONTRACT_ADDRESS = "0x85e369D51240E538Ee78613A8aa7A4509c8bDc6c";
 export const TOKEN_CONTRACT_ABI =   [
     {
       "inputs": [
@@ -871,6 +871,25 @@ export const TOKEN_CONTRACT_ABI =   [
           "internalType": "string",
           "name": "",
           "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "tokenIdsClaimed",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",

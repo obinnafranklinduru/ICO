@@ -15,7 +15,7 @@ contract BinnaDevToken is ERC20, Ownable {
     IBinnaDevs BinnaDevsNFT;
     
     // Mapping to keep track of which tokenIds have been claimed
-    mapping(uint => bool) tokenIds;
+    mapping(uint => bool) public tokenIdsClaimed;
 
     // The constructor accepts an argument of an address to initialize 
     // the BinnaDevsNFT interface and set the value of the token's name and symbol.
@@ -30,10 +30,10 @@ contract BinnaDevToken is ERC20, Ownable {
      * msg.value` should be equal or greater than the tokenPrice * amount
      */
     function mint(uint amount) payable public {
-        uint _requiredAmount = amount * tokenPrice;
+        uint _requiredAmount = tokenPrice * amount;
         require(msg.value >= _requiredAmount,"Ether sent is incorrect");
 
-        uint amountWithDecimals = _requiredAmount * 10**18;
+        uint amountWithDecimals = amount * 10**18;
         require(totalSupply() + amountWithDecimals < maxTotalSupply, "Exceeds the max total supply available.");
 
         // call the internal function from Openzeppelin's ERC20 contract
@@ -50,14 +50,15 @@ contract BinnaDevToken is ERC20, Ownable {
     function claim() public {
         address sender = msg.sender;
         uint256 balance = BinnaDevsNFT.balanceOf(sender);
-        uint256 amount;
         require(balance > 0, "You do not own any Binna Dev NFT's");
+
+        uint256 amount = 0;
         
         for(uint i; i < balance; i++){
             uint tokenId = BinnaDevsNFT.tokenOfOwnerByIndex(sender, i);
-            if(!tokenIds[tokenId]){
+            if(!tokenIdsClaimed[tokenId]){
                 amount++;
-                tokenIds[tokenId] = true;
+                tokenIdsClaimed[tokenId] = true;
             }
         }
 
