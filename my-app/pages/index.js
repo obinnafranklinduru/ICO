@@ -224,7 +224,7 @@ export default function Home() {
       await getTokensToBeClaimed();
     } catch (error) {
       console.error(error);
-      window.alert("You have neither claimed all the tokens nor do you have our BinnaDev NFT.");
+      window.alert("You have claimed all the tokens");
     }
   }
 
